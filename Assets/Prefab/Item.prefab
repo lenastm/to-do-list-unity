@@ -1129,7 +1129,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8210121753897161776}
         m_TargetAssemblyTypeName: Item, Assembly-CSharp
-        m_MethodName: supp
+        m_MethodName: Supp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

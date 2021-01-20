@@ -11,16 +11,15 @@ public class ItemsManager : MonoBehaviour
     public GameObject itemPrefab;
     public Transform itemParent;
     public Button createBtn;
-    private int index = 3;
     public static ItemsManager instance;
+    public TextMeshProUGUI compteur;
 
     public List<Item> itemsCompleted = new List<Item>();
     public List<Item> itemsIncomplete = new List<Item>();
 
     private int completed = 1;
     private int incomplete = 0;
-    public TextMeshProUGUI compteur;
-
+    
 
     private void Awake()
     {
@@ -29,13 +28,11 @@ public class ItemsManager : MonoBehaviour
 
     public void CreateNewItem()
     {
-
         CreateItem(" ", 0);
 
         completed = itemsCompleted.Count;
         incomplete = itemsIncomplete.Count;
         OnValidate();
-
     }
 
     public void CreateItem(string itemDescription, int index)
@@ -46,7 +43,6 @@ public class ItemsManager : MonoBehaviour
         itemsIncomplete.Add(newItemComponent);
         //newItemComponent.GetComponent<Toggle>().onValueChanged.AddListener(delegate { checkItem(newItemComponent); });
     }
-
 
     public void CheckItem(Item item, bool isChecked)
     {
@@ -78,5 +74,23 @@ public class ItemsManager : MonoBehaviour
     private void OnValidate()
     {
         compteur.text = incomplete.ToString() + " incomplete, " + completed.ToString() + " completed";
+    }
+
+    public void Supprime(Item item)
+    {
+        if (itemsCompleted.Contains(item) == true)
+        {
+            itemsCompleted.Remove(item);
+            completed = itemsCompleted.Count;
+            incomplete = itemsIncomplete.Count;
+            OnValidate();
+        }
+        else 
+        {
+            itemsIncomplete.Remove(item);
+            completed = itemsCompleted.Count;
+            incomplete = itemsIncomplete.Count;
+            OnValidate();
+        }
     }
 }
