@@ -6,15 +6,44 @@ using TMPro;
 
 public class Item : MonoBehaviour { 
 
-    // public Image isChecked;
     public TextMeshProUGUI itemText;
+    public Toggle toggle;
     public int index;
 
-public void SetItem(string itemDescription, int index){
-/*    isChecked.sprite = itemSprite;*/
+    public void SetItem(string itemDescription, int index){
+
+            itemText.text = itemDescription;
+            this.index = index;
+    }
+
+    public void CheckItem(bool isChecked)
+    {
+        if (isChecked)
+        {
+            // barrer le texte
+            itemText.fontStyle = FontStyles.Strikethrough;
+            Debug.Log("barré");
+
+        } else {
+            // enlever barrer
+            itemText.fontStyle = FontStyles.Normal;
+            Debug.Log("underline");
+        }
+        ItemsManager.instance.CheckItem(this, isChecked);
+    }
+
+    private void Start()
+    {
+        string itemDescription = PlayerPrefs.GetString("itemDescription");
         itemText.text = itemDescription;
-        this.index = index;
-}
+    }
+
+
+
+    public void SaveName(string itemDescription)
+    {
+        PlayerPrefs.SetString("itemDescription", itemDescription);
+    }
 
   
 }

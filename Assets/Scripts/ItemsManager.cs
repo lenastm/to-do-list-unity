@@ -11,11 +11,16 @@ public class ItemsManager : MonoBehaviour
     public Transform itemParent;
     public Button createBtn;
     public int index = 3;
+    public static ItemsManager instance;
 
-    private List<Item> items = new List<Item>();
+    public List<Item> itemsCompleted = new List<Item>();
+    public List<Item> itemsIncompleted = new List<Item>();
 
 
-
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void CreateNewItem()
     {
@@ -29,13 +34,28 @@ public class ItemsManager : MonoBehaviour
         GameObject newItem = (GameObject)PrefabUtility.InstantiatePrefab(itemPrefab, itemParent);
         Item newItemComponent = newItem.GetComponent<Item>();
         newItemComponent.SetItem(itemDescription, index);
-        items.Add(newItemComponent);
-        newItemComponent.GetComponent<Toggle>().onValueChanged.AddListener(delegate { checkItem(newItemComponent); });
+        itemsIncompleted.Add(newItemComponent);
+        //newItemComponent.GetComponent<Toggle>().onValueChanged.AddListener(delegate { checkItem(newItemComponent); });
     }
 
 
-    void checkItem(Item item)
+    public void CheckItem(Item item, bool isChecked)
     {
-        Debug.Log("item checked");
+        
+        if (isChecked)
+        {
+            itemsIncompleted.Remove(item);
+            itemsCompleted.Add(item);
+
+            Debug.Log("item checked");
+
+        }
+        else
+        {
+            itemsCompleted.Remove(item);
+            itemsIncompleted.Add(item);
+
+            Debug.Log("item unchecked");
+        }
     }
 }
