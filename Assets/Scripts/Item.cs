@@ -45,5 +45,12 @@ public class Item : MonoBehaviour {
         PlayerPrefs.SetString("itemDescription", itemDescription);
     }
 
-  
+    public void supp()
+    {
+        if (true == gameObject.activeInHierarchy) //Si l'objet est actif
+        {
+            gameObject.SetActive(false);	//alors on le désactive
+        }
+    }
+
 }
