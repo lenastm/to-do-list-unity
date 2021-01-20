@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
+using TMPro;
 
 public class ItemsManager : MonoBehaviour
 {
@@ -10,11 +11,15 @@ public class ItemsManager : MonoBehaviour
     public GameObject itemPrefab;
     public Transform itemParent;
     public Button createBtn;
-    public int index = 3;
+    private int index = 3;
     public static ItemsManager instance;
 
     public List<Item> itemsCompleted = new List<Item>();
-    public List<Item> itemsIncompleted = new List<Item>();
+    public List<Item> itemsIncomplete = new List<Item>();
+
+    private int completed = 1;
+    private int incomplete = 0;
+    public TextMeshProUGUI compteur;
 
 
     private void Awake()
@@ -25,8 +30,12 @@ public class ItemsManager : MonoBehaviour
     public void CreateNewItem()
     {
 
-        CreateItem(" ", 4);
-        
+        CreateItem(" ", 0);
+
+        completed = itemsCompleted.Count;
+        incomplete = itemsIncomplete.Count;
+        OnValidate();
+
     }
 
     public void CreateItem(string itemDescription, int index)
@@ -34,7 +43,7 @@ public class ItemsManager : MonoBehaviour
         GameObject newItem = (GameObject)PrefabUtility.InstantiatePrefab(itemPrefab, itemParent);
         Item newItemComponent = newItem.GetComponent<Item>();
         newItemComponent.SetItem(itemDescription, index);
-        itemsIncompleted.Add(newItemComponent);
+        itemsIncomplete.Add(newItemComponent);
         //newItemComponent.GetComponent<Toggle>().onValueChanged.AddListener(delegate { checkItem(newItemComponent); });
     }
 
@@ -44,18 +53,30 @@ public class ItemsManager : MonoBehaviour
         
         if (isChecked)
         {
-            itemsIncompleted.Remove(item);
+            itemsIncomplete.Remove(item);
             itemsCompleted.Add(item);
 
-            Debug.Log("item checked");
+            completed = itemsCompleted.Count;
+            incomplete = itemsIncomplete.Count;
+
+            OnValidate();
 
         }
         else
         {
             itemsCompleted.Remove(item);
-            itemsIncompleted.Add(item);
+            itemsIncomplete.Add(item);
 
-            Debug.Log("item unchecked");
+            completed = itemsCompleted.Count;
+            incomplete = itemsIncomplete.Count;
+
+            OnValidate();
+
         }
+    }
+
+    private void OnValidate()
+    {
+        compteur.text = incomplete.ToString() + " incomplete, " + completed.ToString() + " completed";
     }
 }

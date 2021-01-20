@@ -22,12 +22,10 @@ public class Item : MonoBehaviour {
         {
             // barrer le texte
             itemText.fontStyle = FontStyles.Strikethrough;
-            Debug.Log("barré");
 
         } else {
             // enlever barrer
             itemText.fontStyle = FontStyles.Normal;
-            Debug.Log("underline");
         }
         ItemsManager.instance.CheckItem(this, isChecked);
     }
@@ -37,7 +35,6 @@ public class Item : MonoBehaviour {
         string itemDescription = PlayerPrefs.GetString("itemDescription");
         itemText.text = itemDescription;
     }
-
 
 
     public void SaveName(string itemDescription)
