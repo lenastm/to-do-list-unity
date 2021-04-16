@@ -19,6 +19,6 @@ Minimum requis :
 - Supprimer la tâche ❌
 - Valider une tâche 
 
-Fonctionnalitées supplémentaires : 
+Fonctionnalités supplémentaires : 
 - Compteur du nombre de tâche complète et incomplète 
 - Quand une tâche est validée, elle devient grisée et barrée
